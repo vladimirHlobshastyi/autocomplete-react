@@ -1,0 +1,49 @@
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container.fullSize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 6;
+  background-color: rgb(255, 255, 255);
+}
+.container svg {
+  animation: rotate 2s linear infinite;
+  transform-origin: center;
+}
+.container svg path {
+  stroke: #7f56d9;
+}
+.container svg circle {
+  stroke: #F2F4F7;
+}
+.container svg.inherit {
+  width: inherit;
+  height: inherit;
+}
+.container svg.size-sm {
+  width: 32px;
+  height: 32px;
+}
+.container svg.size-md {
+  width: 48px;
+  height: 48px;
+}
+.container svg.size-lg {
+  width: 56px;
+  height: 56px;
+}
+.container svg.size-xl {
+  width: 64px;
+  height: 64px;
+}/*# sourceMappingURL=Loader.module.css.map */

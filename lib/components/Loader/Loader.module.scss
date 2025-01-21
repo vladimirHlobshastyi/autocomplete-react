@@ -1,0 +1,59 @@
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.fullSize {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  svg {
+    animation: rotate 2s linear infinite;
+    transform-origin: center;
+
+    path {
+      stroke: #7f56d9;
+    }
+
+    circle {
+      stroke: #f2f4f7;
+    }
+
+    &.inherit {
+      width: inherit;
+      height: inherit;
+    }
+
+    &.size-sm {
+      width: 32px;
+      height: 32px;
+    }
+
+    &.size-md {
+      width: 48px;
+      height: 48px;
+    }
+
+    &.size-lg {
+      width: 56px;
+      height: 56px;
+    }
+
+    &.size-xl {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
