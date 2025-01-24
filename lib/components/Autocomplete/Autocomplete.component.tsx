@@ -16,7 +16,8 @@ const Autocomplete = ({
   trailingIcon,
   defaultOption,
   loading,
-  className,
+  loaderColor,
+  classes,
   renderCustomElement,
   onInputValueChange,
   onSelectionChange,
@@ -49,6 +50,7 @@ const Autocomplete = ({
     trailingIcon,
     defaultOption,
     loading,
+    listItem: classes?.listItem,
     renderCustomElement,
     onInputValueChange,
     onSelectionChange,
@@ -56,22 +58,33 @@ const Autocomplete = ({
   });
 
   return (
-    <div className={classNames(className, 'container', styles.container)}>
+    <div
+      className={classNames(
+        classes?.container || 'container',
+        styles.container,
+      )}
+    >
       {label && (
-        <div
-          className={classNames('labelElement', styles.styledLabel)}
+        <label
+          className={classNames(classes?.label || 'label', styles.styledLabel)}
           onClick={() => inputElement.focus()}
         >
           {label}
-        </div>
+        </label>
       )}
 
       <div
         data-disabled={!!disabled}
-        className={classNames('contentElement', styles.content)}
+        className={classNames(classes?.content || 'content', styles.content)}
       >
         {leadingIcon && (
-          <div className={styles.leftIcon} onClick={handleInputClick}>
+          <div
+            className={classNames(
+              styles.leftIcon,
+              classes?.leftIcon || 'leftIcon',
+            )}
+            onClick={handleInputClick}
+          >
             {leadingIcon}
           </div>
         )}
@@ -90,17 +103,27 @@ const Autocomplete = ({
             'aria-activedescendant':
               activeIndex !== null ? `option-${activeIndex}` : undefined,
             onKeyDown: handleEnterKey,
-            onPaste: handleOnPast
+            onPaste: handleOnPast,
           })}
-          className={classNames('inputElement', styles.styledInput, {
-            [styles.leadingIcon]: leadingIcon,
-            [styles.trailingIcon]: isRightIcon,
-          })}
+          className={classNames(
+            classes?.inputElement || 'inputElement',
+            styles.styledInput,
+            {
+              withLeadingIcon: leadingIcon,
+              withTrailingIcon: isRightIcon,
+            },
+          )}
         />
 
         {isRightIcon && (
-          <div className={styles.rightIcon} onClick={handleInputClick}>
-            {loading ? <Loader size='inherit' /> : trailingIcon}
+          <div
+            className={classNames(
+              styles.rightIcon,
+              classes?.rightIcon || 'rightIcon',
+            )}
+            onClick={handleInputClick}
+          >
+            {loading ? <Loader color={loaderColor} size='inherit' /> : trailingIcon}
           </div>
         )}
 
@@ -109,7 +132,10 @@ const Autocomplete = ({
             <div
               style={floatingStyles}
               {...getFloatingProps({ ref: refs.setFloating })}
-              className={classNames('popupContainer', styles.listContainer)}
+              className={classNames(
+                classes?.popupContainer || 'popupContainer',
+                styles.listContainer,
+              )}
             >
               {getRenderOptions()}
             </div>

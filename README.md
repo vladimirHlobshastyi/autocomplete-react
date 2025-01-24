@@ -1,113 +1,282 @@
-# Autocomplete React Component
+# Autocomplete Component
 
-A flexible and customizable Autocomplete component for React, designed for seamless integration into your project.
+A highly customizable and flexible autocomplete component for React, supporting **SCSS Modules**, **Styled Components**, and **TailwindCSS** for styling. The component is designed to handle various use cases, including custom rendering, asynchronous loading, and more.
+
+---
 
 ## Features
 
-- **Searchable dropdown** with keyboard and mouse navigation.
-- **Customizable options** with a render function.
-- **Loading state** support for async operations.
-- **Icons support** for leading and trailing icons.
-- **Controlled and uncontrolled modes** for input value.
-- **Customizable styles**, allowing you to use your own or the built-in styles.
-- **Debounce delay** for input changes with the `inputDelay` prop.
+- **Custom Styling:** Supports SCSS Modules, Styled Components, and TailwindCSS.
+- **Customizable Icons:** Add leading and trailing icons.
+- **Custom Item Rendering:** Render your own item layouts with full control.
+- **Keyboard Navigation:** Supports arrow key navigation and Enter to select.
+- **Async Search:** Delays search queries for optimal performance with the `inputDelay` prop.
+- **Dynamic Options:** Dynamically filter and render options based on input.
+- **Accessibility:** Built with accessibility in mind using ARIA attributes.
 
-## Installation
-
-Install the library using npm or yarn:
-
-```bash
-npm install autocomplete-react
-```
-
-or
-
-```bash
-yarn add autocomplete-react
-```
-
-## Usage
-
-### Basic Example
-
-```tsx
-import React, { useState } from 'react';
-import Autocomplete from 'autocomplete-react';
-
-const App = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const options = [
-    { value: 'apple', label: 'Apple' },
-    { value: 'banana', label: 'Banana' },
-    { value: 'cherry', label: 'Cherry' },
-  ];
-
-  return (
-    <div>
-      <Autocomplete
-        options={options}
-        onSelectionChange={(option) => setSelectedOption(option)}
-        placeholder="Type to search..."
-      />
-      <p>Selected: {selectedOption?.label || 'None'}</p>
-    </div>
-  );
-};
-
-export default App;
-```
+---
 
 ## Props
 
-| Prop                  | Type                                   | Default         | Description                                                                 |
-|-----------------------|----------------------------------------|-----------------|-----------------------------------------------------------------------------|
-| `options`             | `AutocompleteOption[]`                | `[]`            | Array of options to display in the dropdown.                               |
-| `value`               | `string`                              | `''`            | The current input value (controlled).                                      |
-| `label`               | `string`                              | `undefined`     | Label for the input field.                                                 |
-| `inputDelay`          | `number`                              | `undefined`     | Debounce delay for input value changes (milliseconds).                     |
-| `listOffset`          | `number`                              | `10`            | Offset for the dropdown list positioning.                                  |
-| `disabled`            | `boolean`                             | `false`         | Whether the input is disabled.                                             |
-| `placeholder`         | `string`                              | `undefined`     | Placeholder text for the input field.                                      |
-| `leadingIcon`         | `ReactNode`                           | `undefined`     | Icon to display at the start of the input field.                           |
-| `trailingIcon`        | `ReactNode`                           | `undefined`     | Icon to display at the end of the input field.                             |
-| `defaultOption`       | `AutocompleteOption`                  | `undefined`     | Preselected default option.                                                |
-| `loading`             | `boolean`                             | `false`         | Whether the component is in a loading state.                               |
-| `className`           | `string`                              | `undefined`     | Additional class names for the container.                                  |
-| `renderCustomElement` | `(props: RenderCustomElementProps) => ReactNode` | `undefined`     | Custom render function for dropdown options.                               |
-| `onInputValueChange`  | `(value: string) => void`             | `undefined`     | Callback for when the input value changes.                                 |
-| `onSelectionChange`   | `(option: AutocompleteOption) => void` | `undefined`     | Callback for when an option is selected.                                   |
-| `onSearch`            | `(value: string) => void`             | `undefined`     | Callback for search queries.                                               |
+### Core Props
 
-## Customization
+| Prop                  | Type                                         | Default    | Description                                                                                      |
+|-----------------------|----------------------------------------------|------------|--------------------------------------------------------------------------------------------------|
+| `options`             | `AutocompleteOption[]`                      | `[]`       | The list of options to display in the dropdown. Each option should follow the `AutocompleteOption` type. |
+| `value`               | `string`                                    | `''`       | The current value of the input field.                                                           |
+| `label`               | `string`                                    | `null`     | The label for the input field.                                                                  |
+| `placeholder`         | `string`                                    | `null`     | The placeholder for the input field.                                                            |
+| `inputDelay`          | `number`                                    | `0`        | The delay in milliseconds before triggering the search function.                                 |
+| `listOffset`          | `number`                                    | `10`       | The vertical offset for the dropdown list.                                                      |
+| `leadingIcon`         | `ReactNode`                                 | `null`     | Icon to display on the left side of the input.                                                  |
+| `trailingIcon`        | `ReactNode`                                 | `null`     | Icon to display on the right side of the input.                                                 |
+| `loading`             | `boolean`                                   | `false`    | Whether to show a loading spinner in the trailing icon slot.                                    |
+| `loaderColor`         | `string`                                    | `null`     | Color of the loading spinner.                                                                   |
+| `defaultOption`       | `AutocompleteOption`                        | `null`     | The default selected option.                                                                    |
+| `renderCustomElement` | `(props: RenderCustomElementProps) => ReactNode` | `null`     | Function to render a custom item in the dropdown. See `RenderCustomElementProps` for details.   |
 
-### Render Custom Elements
+### Event Props
 
-You can pass a custom render function to the `renderCustomElement` prop to customize how the options are rendered.
+| Prop                  | Type                                             | Description                                                                                      |
+|-----------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `onInputValueChange`  | `(value: string) => void`                        | Callback triggered when the input value changes.                                                |
+| `onSelectionChange`   | `(option: AutocompleteOption) => void`           | Callback triggered when a selection is made.                                                    |
+| `onSearch`            | `(value: string) => void`                        | Callback triggered when the search function is invoked.                                         |
 
-```tsx
+### Styling Props
+
+| Prop      | Type                | Description                                                                                      |
+|-----------|---------------------|--------------------------------------------------------------------------------------------------|
+| `classes` | `AutocompleteClasses` | An object containing class names for overriding default styles.                                  |
+
+### Default Classes (`AutocompleteClasses`)
+
+| Key               | Description                             |
+|-------------------|-----------------------------------------|
+| `container`       | Wrapper container class.               |
+| `label`           | Label class.                          |
+| `content`         | Content container class.              |
+| `inputElement`    | Input field class.                    |
+| `popupContainer`  | Dropdown container class.             |
+| `leftIcon`        | Left icon container class.            |
+| `rightIcon`       | Right icon container class.           |
+| `listItem`        | List item class.                      |
+
+---
+
+## Type Definitions
+
+### AutocompleteOption
+
+The `AutocompleteOption` type defines the structure of an individual option in the dropdown.
+
+```typescript
+type AutocompleteOption = {
+  value: string | number; // The unique value of the option.
+  label: string | number; // The display label of the option.
+  [key: string]: any; // Any additional fields for custom needs.
+};
+RenderCustomElementProps
+The RenderCustomElementProps type defines the props passed to the renderCustomElement function for rendering custom items.
+
+type RenderCustomElementProps = {
+  option: AutocompleteOption; // The current option being rendered.
+  isActive: boolean; // Whether the item is currently focused/active.
+  isSelected?: boolean; // Whether the item is selected.
+  onClick: () => void; // Function to call when the item is clicked.
+  getItemProps: (props?: Record<string, any>) => Record<string, any>; // Utility to bind the necessary props for tracking active items.
+};
+
+---
+
+##Usage Examples
+###1. Using SCSS Modules
+
+import styles from './Autocomplete.module.scss';
+
 <Autocomplete
-  options={options}
-  renderCustomElement={({ option, isActive }) => (
-    <div style={{ backgroundColor: isActive ? 'lightblue' : 'white' }}>
-      {option.label}
+  options={[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+  ]}
+  classes={{
+    container: styles.autocompleteContainer,
+    content: styles.content,
+    inputElement: styles.input,
+    label: styles.label,
+    leftIcon: styles.leftIcon,
+    rightIcon: styles.rightIcon,
+    popupContainer: styles.popupContainer,
+    listItem: styles.listItem,
+  }}
+  label="Search for a fruit"
+  placeholder="Type to search..."
+/>
+SCSS File: Autocomplete.module.scss
+
+.autocompleteContainer {
+  gap: 6px;
+  background-color: #fff;
+
+  .label {
+    color: #344054;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 500;
+  }
+
+  .content {
+    border: 1px solid #d0d5dd;
+    background-color: #fff;
+
+    &:has([data-disabled='true']) {
+      border-color: #d0d5dd;
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 4px rgba(158, 119, 237, 0.24),
+        0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    }
+  }
+
+  .input {
+    min-height: 40px;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    &::placeholder {
+      color: #667085;
+    }
+
+    &[data-disabled='true'] {
+      background-color: #f9fafb;
+    }
+
+    &.withLeadingIcon {
+      padding-left: 38px;
+    }
+
+    &.withTrailingIcon {
+      padding-right: 38px;
+    }
+  }
+
+  .leftIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 12px;
+
+    svg {
+      width: 18px;
+    }
+  }
+
+  .rightIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 12px;
+
+    svg {
+      width: 18px;
+    }
+  }
+
+  .popupContainer {
+    max-height: 300px;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px -2px rgba(16, 24, 40, 0.03),
+      0 12px 16px -4px rgba(16, 24, 40, 0.08);
+  }
+
+  .listItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: #f9fafb;
+      cursor: pointer;
+    }
+
+    &.isActive {
+      background-color: #f9fafb;
+    }
+  }
+}
+
+---
+
+##2. Using Styled Components
+
+import styled from 'styled-components';
+
+const StyledAutocompleteWrapper = styled.div`
+  .container {
+    gap: 6px;
+    background-color: #fff;
+  }
+
+  .label {
+    color: #344054;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .content {
+    border: 1px solid #d0d5dd;
+
+    &:focus-within {
+      box-shadow: 0 0 0 4px rgba(158, 119, 237, 0.24);
+    }
+  }
+`;
+
+<StyledAutocompleteWrapper>
+  <Autocomplete
+    options={[
+      { label: 'Carrot', value: 'carrot' },
+      { label: 'Tomato', value: 'tomato' },
+    ]}
+    label="Search for a vegetable"
+    placeholder="Start typing..."
+  />
+</StyledAutocompleteWrapper>
+
+---
+##3. Using TailwindCSS
+
+<Autocomplete
+  classes={{
+    container: 'flex flex-col gap-1 bg-white',
+    label: 'text-gray-600 text-sm',
+    content: 'border border-gray-300 rounded-md',
+    inputElement: 'px-3 py-2 w-full text-base focus:outline-none',
+    popupContainer: 'shadow-lg rounded-md bg-white max-h-60 overflow-auto',
+    listItem: 'px-4 py-2 hover:bg-gray-100',
+  }}
+  options={[
+    { label: 'Dog', value: 'dog' },
+    { label: 'Cat', value: 'cat' },
+  ]}
+  label="Search for an animal"
+  placeholder="Type something..."
+/>
+---
+###Notes
+##Using renderCustomElement
+When using a custom renderer, ensure you pass getItemProps to the rendered item for proper functionality:
+
+<Autocomplete
+  renderCustomElement={(props) => (
+    <div {...props.getItemProps({ onClick: props.onClick })}>
+      {props.option.label}
     </div>
   )}
 />
-```
-
-### Styling
-
-If you want to use your own styles, you can pass a custom `className` or override the default styles by targeting the provided class names.
-
-| Class Name          | Description                    |
-|---------------------|--------------------------------|
-| `container`         | Wrapper container.            |
-| `content`           | Input field wrapper.          |
-| `styledInput`       | The input field.              |
-| `leftIcon`          | Leading icon wrapper.         |
-| `rightIcon`         | Trailing icon wrapper.        |
-| `listContainer`     | Dropdown list container.      |
-| `listItem`          | Dropdown list item.           |
-| `styledLabel`       | Input label.                  |
-| `isActive`          | Active state for list items.  |
+This ensures the component can track active and selected items correctly.

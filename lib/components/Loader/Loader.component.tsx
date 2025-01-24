@@ -2,7 +2,7 @@ import { LoaderPropsTypes } from './Loader.types';
 import styles from './Loader.module.scss';
 import classNames from 'classnames';
 
-const Loader = ({ size = 'md', fullSize, className }: LoaderPropsTypes) => {
+const Loader = ({ size = 'md', color ='#7f56d9', fullSize, className }: LoaderPropsTypes) => {
   return (
     <div
       className={classNames(styles.container, className, {
@@ -13,6 +13,7 @@ const Loader = ({ size = 'md', fullSize, className }: LoaderPropsTypes) => {
         <circle cx='60' cy='60' r='50' fill='none' strokeWidth='10' />
         <path
           fill='none'
+          stroke={color}
           strokeWidth='10'
           d='M60,10
            a50,50 0 0,1 0,100'

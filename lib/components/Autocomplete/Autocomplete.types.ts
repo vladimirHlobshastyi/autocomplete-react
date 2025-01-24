@@ -33,14 +33,27 @@ interface BaseAutocompleteProps {
   onSearch?: (value: string) => void;
 }
 
+export interface AutocompleteClasses {
+  container?: string;
+  label?: string;
+  content?: string;
+  inputElement?: string;
+  popupContainer?: string;
+  leftIcon?: string;
+  rightIcon?: string;
+  listItem?: string;
+}
+
 export interface UseAutocompleteProps extends BaseAutocompleteProps {
   options: AutocompleteOption[];
   value: string;
+  listItem?: string;
 }
 
 export interface AutocompleteProps extends BaseAutocompleteProps {
   label?: string;
+  loaderColor?: string;
   placeholder?: string;
   disabled?: boolean;
-  className?: string;
+  classes?: AutocompleteClasses;
 }

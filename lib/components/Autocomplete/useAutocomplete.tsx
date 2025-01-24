@@ -32,6 +32,7 @@ const useAutocomplete = ({
   trailingIcon,
   defaultOption,
   loading,
+  listItem,
   renderCustomElement,
   onInputValueChange,
   onSelectionChange,
@@ -40,8 +41,11 @@ const useAutocomplete = ({
   const [inputValue, setInputValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
-  const [currentOptions, setCurrentOptions] = useState<AutocompleteOption[]>(options);
-  const [selectedOption, setSelectedOption] = useState<AutocompleteOption | undefined>(defaultOption);
+  const [currentOptions, setCurrentOptions] =
+    useState<AutocompleteOption[]>(options);
+  const [selectedOption, setSelectedOption] = useState<
+    AutocompleteOption | undefined
+  >(defaultOption);
   const [isTyped, setIsTyped] = useState(false);
   const [isPasted, setIsPasted] = useState(false);
   const listRef = useRef<(HTMLElement | null)[]>([]);
@@ -151,19 +155,22 @@ const useAutocomplete = ({
         onClick: () => onListItemClick(option),
       });
       const isSelectedOption = selectedOption?.value === option.value;
+      const isActiveIndex = index === activeIndex;
+      const isActiveOrSelectedItem = isActiveIndex || isSelectedOption;
 
       return renderCustomElement ? (
         renderCustomElement({
           option,
-          isActive: index === activeIndex,
+          isActive: isActiveIndex,
           onClick: () => onListItemClick(option),
           getItemProps: (props) => ({ ...itemProps, ...props }),
         })
       ) : (
         <div
-          className={classNames(styles.listItem, {
+          className={classNames(styles.listItem, listItem || 'listItem', {
             selectedOption: isSelectedOption,
-            [styles.isActive]: index === activeIndex || isSelectedOption,
+            [styles.isActive]: isActiveOrSelectedItem,
+            'isActive': isActiveOrSelectedItem,
           })}
           key={`${option.label}-${option.value}`}
           {...itemProps}
